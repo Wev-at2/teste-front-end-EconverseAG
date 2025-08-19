@@ -1,0 +1,71 @@
+@use "../../styles/variables"as *;
+@use "../../styles/mixins"as *;
+
+.topBar {
+    background-color: $light-color;
+    padding: 8px 0;
+    border-bottom: 1px solid $light-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem;
+    flex-wrap: wrap;
+
+    .sliderTrack {
+        display: flex;
+        gap: 80px;
+    }
+
+    .infoItem {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: $dark-color;
+        font-weight:  300;
+
+        .bold {
+            font-weight: 600;
+            color: $primary-color;
+        }
+    }
+
+    .infoIcon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .topBar {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .topBar {
+        overflow: hidden;
+        gap: 40px;
+
+        .sliderTrack {
+            display: flex;
+            gap: 40px;
+            animation: scroll-left 20s linear infinite;
+        }
+
+        .infoItem {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+    }
+
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+}

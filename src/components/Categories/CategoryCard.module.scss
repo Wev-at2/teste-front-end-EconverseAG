@@ -1,0 +1,63 @@
+@use "../../styles/variables"as *;
+@use "../../styles/mixins"as *;
+
+.categoryItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:first-child {
+        .categoryIconWrapper {
+            background-color: #fff;
+        }
+    }
+    
+    
+    &.active {
+        background-color: #fff;
+        transform: translateY(-5px);
+    }
+    
+    &:hover {
+        background-color: #fff;
+        transform: translateY(-5px);
+        .categoryName {
+            color: $primary-color;
+            font-weight: 600;
+        }
+    }
+    
+
+    .categoryIconWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        border-radius: 8px;
+        background-color: #eee;
+        margin-bottom: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+
+
+        &.active {
+            background-color: #d91e18;
+        }
+    }
+}
+
+.categoryName {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+    transition: all 0.3s ease;
+
+    &.active {
+        color: $primary-color;
+        font-weight: 600;
+    }
+}
