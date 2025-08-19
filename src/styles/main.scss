@@ -1,0 +1,20 @@
+// Import base styles
+@import './variables';
+@import './mixins';
+@import './reset';
+@import './global';
+
+// Main application styles
+body {
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+}

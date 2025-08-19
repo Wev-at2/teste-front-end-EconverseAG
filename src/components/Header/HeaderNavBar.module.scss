@@ -1,0 +1,83 @@
+@use "../../styles/variables"as *;
+@use "../../styles/mixins"as *;
+
+.navBar {
+  padding: 10px 0;
+  border-top: 1px solid var(--border-color);
+
+  .navList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+
+    a {
+      font-size: 12px;
+      font-weight: 600;
+      color: $dark-color;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &.navLink {
+        color: $dark-color;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &:focus-visible {
+          color: var(--primary-color);
+        }
+      }
+
+      &.ofertas {
+        color: var(--primary-color);
+      }
+
+      &.assinatura {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .navBar {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navBar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100vh;
+    background: $light-color;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+
+    &.open {
+      left: 0;
+    }
+
+    .navList {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+}
