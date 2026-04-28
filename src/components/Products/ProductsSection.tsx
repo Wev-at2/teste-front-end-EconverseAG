@@ -152,7 +152,7 @@ const ProductsSection: React.FC = () => {
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 480px,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
