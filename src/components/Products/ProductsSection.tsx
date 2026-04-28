@@ -130,7 +130,7 @@ const ProductsSection: React.FC = () => {
     draggable: true,
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 2400,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -152,7 +152,7 @@ const ProductsSection: React.FC = () => {
         }
       },
       {
-        breakpoint: 480px,
+        breakpoint: 480,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
