@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
 import styles from './ProductsSection.module.scss';
-import productImage from '../../assets/images/productImage.png';
 import ProductCard from './ProductCard';
 import ProductModal from '../Modal/ProductModal';
 
@@ -12,69 +11,61 @@ interface Product {
   id: number;
   image: string;
   name: string;
-  oldPrice: number;
+  oldPrice?: number;
   newPrice: number;
-  installments: string;
-  shipping: string;
+  installments?: string;
+  shipping?: string;
   description?: string;
 }
 
-const ProductsSection: React.FC = () => {
-  const products: Product[] = [
-    {
-      id: 1,
-      image: productImage,
-      name: "Produto 1",
-      oldPrice: 30.90,
-      newPrice: 28.90,
-      installments: "ou 2x de R$ 14,45 sem juros",
-      shipping: "Frete grátis",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: 2,
-      image: productImage,
-      name: "Produto 2",
-      oldPrice: 30.90,
-      newPrice: 28.90,
-      installments: "ou 2x de R$ 14,45 sem juros",
-      shipping: "Frete grátis",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: 3,
-      image: productImage,
-      name: "Produto 3",
-      oldPrice: 30.90,
-      newPrice: 28.90,
-      installments: "ou 2x de R$ 14,45 sem juros",
-      shipping: "Frete grátis",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: 4,
-      image: productImage,
-      name: "Produto 4",
-      oldPrice: 30.90,
-      newPrice: 28.90,
-      installments: "ou 2x de R$ 14,45 sem juros",
-      shipping: "Frete grátis",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      id: 5,
-      image: productImage,
-      name: "Produto 5",
-      oldPrice: 30.90,
-      newPrice: 28.90,
-      installments: "ou 2x de R$ 14,45 sem juros",
-      shipping: "Frete grátis",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }
-  ];
+interface RemoteProduct {
+  productName: string;
+  descriptionShort: string;
+  photo: string;
+  price: number;
+}
 
+const ProductsSection: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const productUrl = '/api/produtos';
+
+    fetch(productUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Falha ao carregar produtos: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (!data.success || !Array.isArray(data.products)) {
+          throw new Error('Dados de produtos inválidos.');
+        }
+
+        const parsedProducts: Product[] = data.products.map((item: RemoteProduct, index: number) => ({
+          id: index + 1,
+          image: item.photo,
+          name: item.productName,
+          newPrice: item.price,
+          description: item.descriptionShort,
+          installments: 'ou 2x sem juros',
+          shipping: 'Frete grátis'
+        }));
+
+        setProducts(parsedProducts);
+      })
+      .catch(fetchError => {
+        setError(fetchError instanceof Error ? fetchError.message : String(fetchError));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   const openModal = (index: number) => {
     setCurrentIndex(index);
@@ -130,16 +121,24 @@ const ProductsSection: React.FC = () => {
       </div>
 
       {/* Slider aqui */}
-      <Slider {...sliderSettings} className={styles.productsCarouselWrapper}>
-        {products.map((product, index) => (
-          <div key={product.id}>
-            <ProductCard
-              product={product}
-              onOpen={() => openModal(index)}
-            />
-          </div>
-        ))}
-      </Slider>
+      {isLoading ? (
+        <div className={styles.loadingMessage}>Carregando produtos...</div>
+      ) : error ? (
+        <div className={styles.errorMessage}>Erro ao carregar produtos: {error}</div>
+      ) : products.length === 0 ? (
+        <div className={styles.emptyMessage}>Nenhum produto disponível no momento.</div>
+      ) : (
+        <Slider {...sliderSettings} className={styles.productsCarouselWrapper}>
+          {products.map((product, index) => (
+            <div key={product.id}>
+              <ProductCard
+                product={product}
+                onOpen={() => openModal(index)}
+              />
+            </div>
+          ))}
+        </Slider>
+      )}
 
       {isModalOpen && currentIndex !== null && (
         <ProductModal

@@ -17,26 +17,64 @@ interface Props {
 }
 
 const ProductModal: React.FC<Props> = ({ product, onClose, onNext, onPrev }) => {
+  // Fechar modal com tecla ESC
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
+    <div className={styles.modalOverlay} onClick={onClose} role="dialog" aria-modal="true">
       <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-        <button className={styles.modalClose} onClick={onClose}>×</button>
+        <button 
+          className={styles.modalClose} 
+          onClick={onClose}
+          aria-label="Fechar"
+          title="Fechar (ESC)"
+        >
+          ×
+        </button>
 
         {/* Navegação */}
-        <button className={styles.modalPrev} onClick={onPrev}>‹</button>
-        <button className={styles.modalNext} onClick={onNext}>›</button>
+        <button 
+          className={styles.modalPrev} 
+          onClick={onPrev}
+          aria-label="Produto anterior"
+          title="Anterior"
+        >
+          ‹
+        </button>
+        <button 
+          className={styles.modalNext} 
+          onClick={onNext}
+          aria-label="Próximo produto"
+          title="Próximo"
+        >
+          ›
+        </button>
 
-        {/* Grid 2 colunas */}
+        {/* Grid 2 colunas - 1 coluna em mobile */}
         <div className={styles.modalGrid}>
           {/* Esquerda: imagem */}
           <div className={styles.modalImageWrapper}>
-            <img src={product.image} alt={product.name} className={styles.modalImage} />
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              className={styles.modalImage} 
+              loading="lazy"
+            />
           </div>
 
           {/* Direita: infos */}
           <div className={styles.modalInfo}>
             <h2 className={styles.productTitle}>{product.name}</h2>
-            <p className={styles.productPrice}>R$ {product.newPrice}</p>
+            <p className={styles.productPrice}>R$ {(product.newPrice / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
             <p className={styles.productDescription}>
               {product.description || "Descrição não disponível"}
             </p>
@@ -46,9 +84,19 @@ const ProductModal: React.FC<Props> = ({ product, onClose, onNext, onPrev }) => 
 
             <div className={styles.productActions}>
               <div className={styles.quantitySelector}>
-                <button className={styles.quantityBtn} aria-label="Diminuir quantidade">-</button>
+                <button 
+                  className={styles.quantityBtn} 
+                  aria-label="Diminuir quantidade"
+                >
+                  −
+                </button>
                 <span className={styles.quantityValue}>01</span>
-                <button className={styles.quantityBtn} aria-label="Aumentar quantidade">+</button>
+                <button 
+                  className={styles.quantityBtn} 
+                  aria-label="Aumentar quantidade"
+                >
+                  +
+                </button>
               </div>
               <button className={styles.buyButton}>Comprar</button>
             </div>

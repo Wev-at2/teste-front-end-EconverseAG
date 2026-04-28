@@ -1,76 +1,82 @@
-<<<<<<< HEAD
-# Teste Econverse: Vaga Desenvolvedor Front-End
-
-### Vem ser #Econverse!
-
-Segue abaixo as instruções para a execução do teste.
-
-## Instruções
-- Faça um fork desse projeto para a sua conta pessoal do GitHub.
-- Desenvolva a página conforme as **Especificações Técnicas** 
-- Crie um README com as instruções para compilar, testar e rodar o projeto.
-- O link do repositório deverá ser enviado para o e-mail ana.nascimento@econverse.com.br, joao.victor@econverse.com.br e eduardo.rodrigues@econverse.com.br com o título **Teste Vaga FrontEnd Jr**
-
-## Especificações Técnicas
-- Desenvolver a pagina em React e TypeScript conforme o [layout](https://www.figma.com/file/rWnzPeoxgynuNPsJjV0VmV/Teste-Front-End-Jr?node-id=0%3A1). Para conseguir pegar os elementos do Figma, basta copiar o layout para sua conta que terá acesso de edição.
-- Montar a [vitrine](https://app.econverse.com.br/teste-front-end/junior/tecnologia/layout/vitrine-produtos.png) de produtos consumindo as informações dos produtos em json atraves desse [Link](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json).
-- Desenvolver a interação ao clicar em um produto conforme layout. A interação consiste em abrir um modal com as principais informações do produto presente no arquivo [JSON](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json) conforme o produto que clicar.
-- Utilizar Pré-processador Sass, Less ou Stylus.
-- Respeitar o Layout pixel a pixel, tamanho das fontes, cores e botões.
-- Não Utilizar bibliotecas UI como Bootstrap, Foundation, ou afins.
-
-## Pontos Extras
-- Utilizar Boas práticas de SEO
-- Uso de HTML semântico
-
-## O que avaliaremos em seu teste
-- Organização do projeto
-- Lógica do código
-- Componentização
-- Alcance dos objetivos propostos
-
-**Boa sorte! ;)**
-=======
 # Teste Front-End - EconverseAG
 
 Este projeto é um teste de desenvolvimento front-end utilizando **React + TypeScript + Vite**.
 
-## Estrutura do Projeto
+## Visão geral do projeto
 
-- `src/components` - Componentes reutilizáveis:
-  - `ProductSection.tsx` - Seção de produtos.
-  - `ProductCard.tsx` - Cartão individual de produto.
-  - `TopBar.tsx` - Barra superior com itens responsivos.
+- Interface construída com React e TypeScript.
+- Estilos escritos em Sass/SCSS.
+- Consumo de dados de produtos via JSON.
+- Modal de produto exibido ao clicar em cada item.
+- Layout responsivo e sem uso de bibliotecas UI prontas.
+
+## Estrutura do projeto
+
+- `src/components` - Componentes reutilizáveis.
 - `src/assets` - Imagens e arquivos estáticos.
-- `src/styles` - Estilos globais e componentes estilizados.
+- `src/styles` - Estilos globais e variáveis.
+- `src/pages` - Páginas principais da aplicação.
 
-## Funcionalidades Implementadas
+## Funcionalidades implementadas
 
-1. **Grid de Produtos convertido em Carrossel**
-   - Utiliza [react-slick](https://react-slick.neostack.com/) para exibir os produtos como carrossel.
-   - Responsivo: desktop mantém grid, mobile mostra carrossel deslizante.
+- Exibição de produtos a partir do JSON fornecido.
+- Modal com informações do produto ao clicar em um item.
+- Layout responsivo para desktop e mobile.
+- Uso de Sass para organização de estilos.
 
-2. **TopBar Responsiva**
-   - Itens da TopBar viram slide em dispositivos mobile.
-   - Animação automática (autoplay) implementada para não precisar arrastar manualmente.
-
-3. **Configuração de Lint e TypeScript**
-   - ESLint configurado com regras recomendadas e checagem de tipos.
-   - Suporte a React + TypeScript + Vite com Hot Module Replacement.
-
-## Tecnologias Utilizadas
+## Tecnologias utilizadas
 
 - React 18
 - TypeScript
 - Vite
-- react-slick (carrossel)
+- Sass/SCSS
 - ESLint
-- TailwindCSS (se aplicável)
 
-## Rodando o Projeto
+## Como rodar o projeto
 
 1. Instale as dependências:
 
 ```bash
 npm install
->>>>>>> master
+```
+
+2. Execute o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+3. Abra o projeto no navegador no endereço exibido pelo Vite.
+
+## Instruções originais da vaga
+
+Teste Econverse: Vaga Desenvolvedor Front-End
+
+Vem ser #Econverse!
+
+### Instruções
+- Faça um fork desse projeto para a sua conta pessoal do GitHub.
+- Desenvolva a página conforme as **Especificações Técnicas**.
+- Crie um README com as instruções para compilar, testar e rodar o projeto.
+- O link do repositório deverá ser enviado para o e-mail julia.gardiano@econverse.com.br com o título **Teste Vaga FrontEnd**.
+
+### Especificações Técnicas
+- Desenvolver a página em React e TypeScript conforme o [layout](https://www.figma.com/file/rWnzPeoxgynuNPsJjV0VmV/Teste-Front-End-Jr?node-id=0%3A1). Para conseguir pegar os elementos do Figma, basta copiar o layout para sua conta que terá acesso de edição.
+- Montar a [vitrine](https://app.econverse.com.br/teste-front-end/junior/tecnologia/layout/vitrine-produtos.png) de produtos consumindo as informações dos produtos em json através desse [link](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json).
+- Desenvolver a interação ao clicar em um produto conforme layout. A interação consiste em abrir um modal com as principais informações do produto presente no arquivo [JSON](https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json) conforme o produto que clicar.
+- Utilizar pré-processador Sass, Less ou Stylus.
+- Respeitar o layout pixel a pixel, tamanho das fontes, cores e botões.
+- Não utilizar bibliotecas UI como Bootstrap, Foundation, ou afins.
+
+### Pontos Extras
+- Utilizar boas práticas de SEO.
+- Uso de HTML semântico.
+
+### O que avaliaremos em seu teste
+- Organização do projeto.
+- Lógica do código.
+- Componentização.
+- Alcance dos objetivos propostos.
+
+**Boa sorte! ;)**
+
