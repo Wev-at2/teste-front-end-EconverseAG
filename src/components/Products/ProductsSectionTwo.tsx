@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Slider from "react-slick";
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductsSection.module.scss';
 import ProductCard from './ProductCard';
 import ProductModal from '../Modal/ProductModal';
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 interface Product {
   id: number;
@@ -32,40 +28,52 @@ const ProductsSection: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
+  const carouselRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const productUrl = '/api/produtos';
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/produtos');
 
-    fetch(productUrl)
-      .then(response => {
         if (!response.ok) {
-          throw new Error(`Falha ao carregar produtos: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (!data.success || !Array.isArray(data.products)) {
-          throw new Error('Dados de produtos inválidos.');
+          throw new Error(`Erro: ${response.status}`);
         }
 
-        const parsedProducts: Product[] = data.products.map((item: RemoteProduct, index: number) => ({
-          id: index + 1,
-          image: item.photo,
-          name: item.productName,
-          newPrice: item.price,
-          description: item.descriptionShort,
-          installments: 'ou 2x sem juros',
-          shipping: 'Frete grátis'
-        }));
+        const data = await response.json();
+
+        const parsedProducts: Product[] = data.products.map(
+          (item: RemoteProduct, index: number) => ({
+            id: index + 1,
+            image: item.photo,
+            name: item.productName,
+            newPrice: item.price,
+            description: item.descriptionShort,
+            installments: 'ou 2x sem juros',
+            shipping: 'Frete grátis',
+          })
+        );
 
         setProducts(parsedProducts);
-      })
-      .catch(fetchError => {
-        setError(fetchError instanceof Error ? fetchError.message : String(fetchError));
-      })
-      .finally(() => {
         setIsLoading(false);
-      });
+      } catch (err) {
+        setError('Erro ao carregar produtos');
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!carouselRef.current) return;
+
+    const scrollAmount = carouselRef.current.offsetWidth * 0.8;
+
+    carouselRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
 
   const openModal = (index: number) => {
     setCurrentIndex(index);
@@ -89,27 +97,6 @@ const ProductsSection: React.FC = () => {
     }
   };
 
-  // Configurações do slider
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    centerMode: false,
-    responsive: [
-      {
-        breakpoint: 1440,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
-    ]
-  };
-
   return (
     <section className={`${styles.productsSection} container`}>
       <div className={styles.sectionTitleContainer}>
@@ -117,27 +104,41 @@ const ProductsSection: React.FC = () => {
         <h2 className={styles.sectionTitle}>Produtos Relacionados</h2>
         <div className={styles.line}></div>
       </div>
-      <div>
+
+      <div className={styles.productTags}>
+        <a className={`${styles.tagItem} ${styles.active}`}>CELULAR</a>
+        <a className={styles.tagItem}>ACESSÓRIOS</a>
+        <a className={styles.tagItem}>FONES</a>
+        <a className={styles.tagItem}>SMARTWATCH</a>
+        <a className={styles.tagItem}>PROMOÇÕES</a>
+        <a className={styles.tagItem}>VER TODOS</a>
       </div>
 
-      {/* Slider aqui */}
       {isLoading ? (
-        <div className={styles.loadingMessage}>Carregando produtos...</div>
+        <div>Carregando...</div>
       ) : error ? (
-        <div className={styles.errorMessage}>Erro ao carregar produtos: {error}</div>
-      ) : products.length === 0 ? (
-        <div className={styles.emptyMessage}>Nenhum produto disponível no momento.</div>
+        <div>{error}</div>
       ) : (
-        <Slider {...sliderSettings} className={styles.productsCarouselWrapper}>
-          {products.map((product, index) => (
-            <div key={product.id}>
-              <ProductCard
-                product={product}
-                onOpen={() => openModal(index)}
-              />
-            </div>
-          ))}
-        </Slider>
+        <div className={styles.carouselWrapper}>
+          <button onClick={() => scroll('left')} className={styles.arrow}>
+            ◀
+          </button>
+
+          <div className={styles.carousel} ref={carouselRef}>
+            {products.map((product, index) => (
+              <div key={product.id} className={styles.cardWrapper}>
+                <ProductCard
+                  product={product}
+                  onOpen={() => openModal(index)}
+                />
+              </div>
+            ))}
+          </div>
+
+          <button onClick={() => scroll('right')} className={styles.arrow}>
+            ▶
+          </button>
+        </div>
       )}
 
       {isModalOpen && currentIndex !== null && (
