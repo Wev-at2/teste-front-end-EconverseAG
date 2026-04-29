@@ -37,7 +37,6 @@ const ProductsSection: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/produtos');
-
         if (!response.ok) {
           throw new Error(`Erro: ${response.status}`);
         }
