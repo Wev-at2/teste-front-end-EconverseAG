@@ -121,7 +121,7 @@ const ProductsSection: React.FC = () => {
       ) : (
         <div className={styles.carouselWrapper}>
           <button onClick={() => scroll('left')} className={styles.arrow}>
-            ◀
+            ‹
           </button>
 
           <div className={styles.carousel} ref={carouselRef}>
@@ -136,7 +136,7 @@ const ProductsSection: React.FC = () => {
           </div>
 
           <button onClick={() => scroll('right')} className={styles.arrow}>
-            ▶
+            ›
           </button>
         </div>
       )}
