@@ -227,10 +227,14 @@
 
 .modalPrev {
   left: 1rem;
+  top: 40%;
+
 }
 
 .modalNext {
   right: 1rem;
+  top: 40%;
+
 }
 
 .modalGrid {
@@ -378,7 +382,7 @@
   }
 
   .slick-track {
-    display: block;
+    display: flex;
     box-sizing: border-box;
   }
 
@@ -507,16 +511,6 @@
       }
     }
   }
-
-  :global {
-    .slick-prev {
-      left: -40px;
-    }
-
-    .slick-next {
-      right: -40px;
-    }
-  }
 }
 
 @media (max-width: 768px) {
@@ -569,8 +563,8 @@
   }
 
   .modalContent {
-    max-width: 95%;
-    width: 95%;
+    max-width: 80%;
+    width: 100%;
     padding: 1.5rem;
     max-height: 90vh;
     overflow-y: auto;

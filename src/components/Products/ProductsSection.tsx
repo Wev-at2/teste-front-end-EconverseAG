@@ -119,9 +119,8 @@ const ProductsSection: React.FC = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
     slidesToScroll: 1,
-    arrows: true,
+    arrows: false,
     autoplay: true,
     autoplaySpeed: 3000,
     swipe: true,
@@ -132,14 +131,14 @@ const ProductsSection: React.FC = () => {
       {
         breakpoint: 2400,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 6,
           slidesToScroll: 1,
         }
       },
       {
-        breakpoint: 1024,
+        breakpoint: 1920,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
         }
       },
