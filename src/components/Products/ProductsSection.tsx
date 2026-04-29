@@ -36,7 +36,7 @@ const ProductsSection: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch('/api/produtos');
 
         if (!response.ok) {
           throw new Error(`Erro: ${response.status}`);
