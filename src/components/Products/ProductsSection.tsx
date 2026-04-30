@@ -3,6 +3,7 @@ import styles from './ProductsSection.module.scss';
 import ProductCard from './ProductCard';
 import ProductModal from '../Modal/ProductModal';
 
+
 interface Product {
   id: number;
   image: string;
@@ -51,6 +52,7 @@ const ProductsSection: React.FC = () => {
             id: index + 1,
             image: item.photo,
             name: item.productName,
+            oldPrice: item.price * 1.2, // Simulando um preço antigo 20% maior
             newPrice: item.price,
             description: item.descriptionShort,
             installments: 'ou 2x sem juros',

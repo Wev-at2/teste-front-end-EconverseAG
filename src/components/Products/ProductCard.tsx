@@ -22,10 +22,13 @@ const ProductCard: React.FC<Props> = ({ product, onOpen }) => {
       <img src={product.image} alt={product.name} className={styles.productImage} />
       <div className={styles.productInfo}>
         <p className={styles.productDesc}>{product.name}</p>
-        {product.oldPrice !== undefined && (
-          <p className={styles.productPriceOld}>R$ {product.oldPrice}</p>
-        )}
-        <p className={styles.productPriceNew}>R$ {product.newPrice}</p>
+        <p className={styles.oldPrice}>
+  R$ {product.oldPrice?.toFixed(2)}
+</p>
+
+<p className={styles.newPrice}>
+  R$ {product.newPrice.toFixed(2)}
+</p>
         {product.installments && (
           <p className={styles.productInstallments}>{product.installments}</p>
         )}

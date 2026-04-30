@@ -3,6 +3,7 @@ import styles from './ProductsSection.module.scss';
 import ProductCard from './ProductCard';
 import ProductModal from '../Modal/ProductModal';
 
+
 interface Product {
   id: number;
   image: string;
@@ -21,6 +22,9 @@ interface RemoteProduct {
   price: number;
 }
 
+const API_URL =
+  'https://app.econverse.com.br/teste-front-end/junior/tecnologia/lista-produtos/produtos.json';
+
 const ProductsSection: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,18 +38,21 @@ const ProductsSection: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/produtos');
-
         if (!response.ok) {
           throw new Error(`Erro: ${response.status}`);
         }
 
         const data = await response.json();
 
-        const parsedProducts: Product[] = data.products.map(
+        // ⚠️ defesa contra formato inesperado
+        const list = data?.products ?? data ?? [];
+
+        const parsedProducts: Product[] = list.map(
           (item: RemoteProduct, index: number) => ({
             id: index + 1,
             image: item.photo,
             name: item.productName,
+            oldPrice: item.price * 1.2, // Simulando um preço antigo 20% maior
             newPrice: item.price,
             description: item.descriptionShort,
             installments: 'ou 2x sem juros',
@@ -54,9 +61,10 @@ const ProductsSection: React.FC = () => {
         );
 
         setProducts(parsedProducts);
-        setIsLoading(false);
       } catch (err) {
+        console.error(err);
         setError('Erro ao carregar produtos');
+      } finally {
         setIsLoading(false);
       }
     };
